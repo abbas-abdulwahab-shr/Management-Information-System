@@ -1,21 +1,8 @@
 import { Response } from 'express'
 import { AuthRequest } from '../../middlewares/auth.middleware.js'
 import { Program } from '../program/schema/program.js'
-import { AuditAction } from '../auditLogs/schema/auditLog.js'
+import { AuditAction, AuditLog } from '../auditLogs/schema/auditLog.js'
 import { transformERPProject, ExternalERPProject } from './erp.adapter.js'
-import mongoose from 'mongoose'
-
-const AuditLog = mongoose.model(
-  'AuditLog',
-  new mongoose.Schema({
-    actionType: String,
-    performedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    entityType: String,
-    entityId: mongoose.Schema.Types.ObjectId,
-    metadata: mongoose.Schema.Types.Mixed,
-    createdAt: { type: Date, default: Date.now },
-  }),
-)
 
 export const syncProjects = async (req: AuthRequest, res: Response) => {
   try {

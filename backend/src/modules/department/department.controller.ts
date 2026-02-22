@@ -2,7 +2,7 @@ import { Response } from 'express'
 import { AuthRequest } from '../../middlewares/auth.middleware.js'
 import { User, Role } from '../user/schema/user.js'
 // import { Program } from '../../modelSchema/program.js'
-import { Department, IDepartment } from '../../modelSchema/department.js'
+import { Department, IDepartment } from './schema/department.js'
 import { AuditLog, AuditAction } from '../auditLogs/schema/auditLog.js'
 
 export const createDepartment = async (req: AuthRequest, res: Response) => {
