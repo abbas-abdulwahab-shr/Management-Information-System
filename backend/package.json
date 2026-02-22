@@ -1,0 +1,46 @@
+{
+  "name": "management-information-system-backend",
+  "version": "1.0.0",
+  "description": "this is the backend for the management information system",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_ENV=production node dist/index.js",
+    "build": "tsc",
+    "dev": "NODE_ENV=local tsx watch src/index.ts"
+  },
+  "keywords": [
+    "management information system",
+    "backend",
+    "nodejs",
+    "express",
+    "erp integration"
+  ],
+  "author": "Abdulwahab Abbas",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^4.22.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.1",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.3.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.8.1",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
