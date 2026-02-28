@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Heading,
@@ -21,48 +21,51 @@ import {
 } from '@chakra-ui/react';
 
 // Dummy data for demonstration
-const summary = { totalPrograms: 12, totalUsers: 34 };
-const projectsPerDepartment = [
-  { department: 'IT', count: 5, projects: ['ERP Migration', 'Digital Transformation'] },
-  { department: 'Finance', count: 3, projects: ['Budget Review', 'Audit'] },
-  { department: 'HR', count: 4, projects: ['Recruitment Drive', 'Training'] },
-];
-const activeUsers = [
-  { name: 'John Doe', avatar: '', role: 'Admin' },
-  { name: 'Jane Smith', avatar: '', role: 'Manager' },
-  { name: 'Alice Johnson', avatar: '', role: 'Staff' },
-];
+// const summary = { totalPrograms: 12, totalUsers: 34 };
+// const projectsPerDepartment = [
+//   { department: 'IT', count: 5, projects: ['ERP Migration', 'Digital Transformation'] },
+//   { department: 'Finance', count: 3, projects: ['Budget Review', 'Audit'] },
+//   { department: 'HR', count: 4, projects: ['Recruitment Drive', 'Training'] },
+// ];
+// const activeUsers = [
+//   { name: 'John Doe', avatar: '', role: 'Admin' },
+//   { name: 'Jane Smith', avatar: '', role: 'Manager' },
+//   { name: 'Alice Johnson', avatar: '', role: 'Staff' },
+// ];
 
-// Dummy measurable impact metrics
-const impactMetrics = [
-  { label: 'Cost Savings', value: 85000, unit: 'USD', percent: 85 },
-  { label: 'Efficiency Improvement', value: 72, unit: '%', percent: 72 },
-  { label: 'User Satisfaction', value: 4.5, unit: '/ 5', percent: 90 },
-  { label: 'Lives Affected / Beneficiaries', value: 12000, unit: '', percent: 60 },
-];
+// // Dummy measurable impact metrics
+// const impactMetrics = [
+//   { label: 'Cost Savings', value: 85000, unit: 'USD', percent: 85 },
+//   { label: 'Efficiency Improvement', value: 72, unit: '%', percent: 72 },
+//   { label: 'User Satisfaction', value: 4.5, unit: '/ 5', percent: 90 },
+//   { label: 'Lives Affected / Beneficiaries', value: 12000, unit: '', percent: 60 },
+// ];
 
 const ReportPage: React.FC = () => {
-  const [summary, setSummary] = React.useState<any>({ totalPrograms: 0, totalUsers: 0 });
-  const [projectsPerDepartment, setProjectsPerDepartment] = React.useState<any[]>([]);
-  const [activeUsers, setActiveUsers] = React.useState<any[]>([]);
-  React.useEffect(() => {
+  const [summary, setSummary] = useState<any>({ totalPrograms: 0, totalUsers: 0 });
+  const [projectsPerDepartment, setProjectsPerDepartment] = useState<any[]>([]);
+  const [activeUsers, setActiveUsers] = useState<any[]>([]);
+
+  useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/report/summary`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then((r) => r.json())
       .then((data) => setSummary(data))
       .catch(() => setSummary({ totalPrograms: 0, totalUsers: 0 }));
+
     fetch(`${import.meta.env.VITE_API_URL}/api/report/projects-per-department`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then((r) => r.json())
-      .then((data) => setProjectsPerDepartment(data))
+      .then((data) => setProjectsPerDepartment(data.projectsPerDepartment))
       .catch(() => setProjectsPerDepartment([]));
+
     fetch(`${import.meta.env.VITE_API_URL}/api/report/active-users`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     })
       .then((r) => r.json())
-      .then((data) => setActiveUsers(data))
+      .then((data) => setActiveUsers(data.activeUsers))
       .catch(() => setActiveUsers([]));
   }, []);
 
