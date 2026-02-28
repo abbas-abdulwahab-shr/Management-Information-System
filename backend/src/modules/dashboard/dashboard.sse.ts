@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import {
-  summaryStats,
-  projectsPerDepartment,
-  activeUsers,
+  getSummaryStatsRaw,
+  getProjectsPerDepartmentRaw,
+  getActiveUsersRaw,
 } from '../report/report.controller.js'
 
 // Simple in-memory list of clients
@@ -18,9 +18,9 @@ export function dashboardSSE(req: Request, res: Response) {
 
   // Send initial data
   Promise.all([
-    summaryStats(req, res, true),
-    projectsPerDepartment(req, res, true),
-    activeUsers(req, res, true),
+    getSummaryStatsRaw(),
+    getProjectsPerDepartmentRaw(),
+    getActiveUsersRaw(),
   ]).then(([summary, projects, users]) => {
     res.write(
       `event: dashboard\ndata: ${JSON.stringify({ summary, projects, users })}\n\n`,
