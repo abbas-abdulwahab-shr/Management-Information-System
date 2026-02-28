@@ -15,7 +15,6 @@ import {
   Flex,
   Text,
   Stack,
-  useToast,
   Spinner,
   Badge,
 } from '@chakra-ui/react';
@@ -28,44 +27,43 @@ interface Department {
   name: string;
   head?: { id: string; firstName: string; lastName: string; email: string };
   programs: { id: string; title: string; status: string }[];
-  staffCount: number;
+  staffCount?: number;
   createdAt: string;
 }
 
-const dummyDepartments: Department[] = [
-  {
-    id: '1',
-    name: 'IT',
-    head: { id: 'u1', firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
-    programs: [
-      { id: 'p1', title: 'ERP Migration', status: 'Active' },
-      { id: 'p2', title: 'Network Upgrade', status: 'Completed' },
-    ],
-    staffCount: 12,
-    createdAt: '2024-01-10',
-  },
-  {
-    id: '2',
-    name: 'Finance',
-    head: { id: 'u2', firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
-    programs: [{ id: 'p3', title: 'Budget Review', status: 'Active' }],
-    staffCount: 8,
-    createdAt: '2024-02-15',
-  },
-  {
-    id: '3',
-    name: 'HR',
-    head: undefined,
-    programs: [],
-    staffCount: 5,
-    createdAt: '2024-03-01',
-  },
-];
+// const dummyDepartments: Department[] = [
+//   {
+//     id: '1',
+//     name: 'IT',
+//     head: { id: 'u1', firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
+//     programs: [
+//       { id: 'p1', title: 'ERP Migration', status: 'Active' },
+//       { id: 'p2', title: 'Network Upgrade', status: 'Completed' },
+//     ],
+//     staffCount: 12,
+//     createdAt: '2024-01-10',
+//   },
+//   {
+//     id: '2',
+//     name: 'Finance',
+//     head: { id: 'u2', firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
+//     programs: [{ id: 'p3', title: 'Budget Review', status: 'Active' }],
+//     staffCount: 8,
+//     createdAt: '2024-02-15',
+//   },
+//   {
+//     id: '3',
+//     name: 'HR',
+//     head: undefined,
+//     programs: [],
+//     staffCount: 5,
+//     createdAt: '2024-03-01',
+//   },
+// ];
 
 const DepartmentPage: React.FC = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState(true);
-  const toast = useToast();
   const navigate = useNavigate();
 
   // Modal state placeholders
@@ -75,6 +73,7 @@ const DepartmentPage: React.FC = () => {
   const [selectedDepartment, setSelectedDepartment] = useState<Department | null>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     fetch(`${import.meta.env.VITE_API_URL}/api/department`, {
       headers: {
@@ -210,6 +209,7 @@ const DepartmentPage: React.FC = () => {
         .then((res) => res.json())
         .then((data) => {
           fetchDepartments();
+          console.log('Assign head response:', data);
         })
         .catch(() => setLoading(false));
     }

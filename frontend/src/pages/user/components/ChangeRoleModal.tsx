@@ -25,7 +25,6 @@ interface ChangeRoleModalProps {
 const ChangeRoleModal: React.FC<ChangeRoleModalProps> = ({
   isOpen,
   onClose,
-  userId,
   currentRole,
   onRoleChanged,
 }) => {

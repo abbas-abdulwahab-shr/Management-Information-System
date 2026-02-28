@@ -148,8 +148,9 @@ const ProgramCreatePage: React.FC = () => {
       <form onSubmit={handleSubmit}>
         {/* Stepper UI */}
         <Stepper index={step - 1} mb={8} colorScheme="teal">
-          {steps.map((s, i) => (
+          {steps.map((s) => (
             <Step key={s.title}>
+              x
               <StepIndicator>
                 <StepStatus
                   complete={<StepIcon />}
