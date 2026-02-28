@@ -2,17 +2,23 @@ import { Request, Response } from 'express'
 import { Program } from '../program/schema/program.js'
 import { User } from '../user/schema/user.js'
 
-export const summaryStats = async (_req: Request, res: Response) => {
+export const summaryStats = async (_req: Request, res: Response, raw = false) => {
   try {
     const totalPrograms = await Program.countDocuments()
     const totalUsers = await User.countDocuments()
+    if (raw) return { totalPrograms, totalUsers }
     res.status(200).json({ totalPrograms, totalUsers })
   } catch (error) {
+    if (raw) return { error }
     res.status(500).json({ message: 'Failed to generate summary.', error })
   }
 }
 
-export const projectsPerDepartment = async (_req: Request, res: Response) => {
+export const projectsPerDepartment = async (
+  _req: Request,
+  res: Response,
+  raw = false,
+) => {
   try {
     const data = await Program.aggregate([
       {
@@ -34,17 +40,21 @@ export const projectsPerDepartment = async (_req: Request, res: Response) => {
         },
       },
     ])
+    if (raw) return { projectsPerDepartment: data }
     res.status(200).json({ projectsPerDepartment: data })
   } catch (error) {
+    if (raw) return { error }
     res.status(500).json({ message: 'Failed to generate report.', error })
   }
 }
 
-export const activeUsers = async (_req: Request, res: Response) => {
+export const activeUsers = async (_req: Request, res: Response, raw = false) => {
   try {
     const users = await User.find({ isActive: true })
+    if (raw) return { activeUsers: users }
     res.status(200).json({ activeUsers: users })
   } catch (error) {
+    if (raw) return { error }
     res.status(500).json({ message: 'Failed to fetch active users.', error })
   }
 }

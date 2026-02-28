@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { createDepartment, assignHead, getDepartments } from './department.controller.js'
+import {
+  createDepartment,
+  assignHead,
+  getDepartments,
+  getDepartmentDetail,
+} from './department.controller.js'
 import { authenticate, authorizeRoles } from '../../middlewares/auth.middleware.js'
 import { Role } from '../user/schema/user.js'
 
@@ -13,5 +18,7 @@ router.post('/assign-head', authenticate, authorizeRoles(Role.SUPER_ADMIN), assi
 
 // Get departments (any authenticated user)
 router.get('/', authenticate, getDepartments)
+// Get department detail by ID (any authenticated user)
+router.get('/:id', authenticate, getDepartmentDetail)
 
 export default router

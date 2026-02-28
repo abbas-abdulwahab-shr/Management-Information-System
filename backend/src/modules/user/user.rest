@@ -1,0 +1,25 @@
+### Register User
+POST http://localhost:5000/api/user/register
+Content-Type: application/json
+
+{
+  "firstName": "abbas",
+  "lastName": "Abdulwahab",
+  "email": "abbas.abdulwahab@example.com",
+  "password": "password123",
+  "role": "SUPER_ADMIN"
+}
+
+### Login User
+POST http://localhost:5000/api/user/login
+Content-Type: application/json
+
+{
+  "email": "abbas.abdulwahab@example.com",
+  "password": "password123"
+}
+
+### Get Profile (replace <token> with your JWT)
+GET http://localhost:5000/api/user/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5OWI4M2RjNGNmYWE5OWY3NmQyMzExZCIsInJvbGUiOiJTVVBFUl9BRE1JTiIsImlhdCI6MTc3MTc5OTY2NCwiZXhwIjoxNzcxODg2MDY0fQ.mMBFhFF0KbuaXqD_sVqJ4DH0HROfuzt1HTYGvyBmMIQ
+

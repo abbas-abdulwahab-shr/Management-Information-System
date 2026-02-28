@@ -31,7 +31,7 @@ export const assignHead = async (req: AuthRequest, res: Response) => {
     const department = await Department.findByIdAndUpdate(
       departmentId,
       { head: headId },
-      { new: true },
+      { returnDocument: 'after' },
     )
     if (!department) {
       return res.status(404).json({ message: 'Department not found.' })
@@ -65,5 +65,36 @@ export const getDepartments = async (req: AuthRequest, res: Response) => {
     res.status(200).json({ departments })
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch departments.', error })
+  }
+}
+
+export const getDepartmentDetail = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params
+    const department = await Department.findById(id)
+      .populate('head', 'firstName lastName email role')
+      .populate({
+        path: 'programs',
+        select: 'title status startDate endDate',
+        populate: {
+          path: 'officer',
+          select: 'firstName lastName email role',
+        },
+      })
+    if (!department) {
+      return res.status(404).json({ message: 'Department not found.' })
+    }
+    // Calculate staff count
+    const staffCount = await User.countDocuments({ department: department._id })
+    res.status(200).json({
+      id: department._id,
+      name: department.name,
+      head: department.head || undefined,
+      programs: department.programs || [],
+      staffCount,
+      createdAt: department.createdAt,
+    })
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch department detail.', error })
   }
 }

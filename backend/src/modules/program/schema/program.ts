@@ -12,9 +12,15 @@ export interface IProgram {
   description?: string
   status: ProgramStatus
   officerId: Types.ObjectId
+  primarySponsor?: Types.ObjectId
+  supportingSponsor?: Types.ObjectId
+  departmentId: Types.ObjectId
+  impact?: string
+  beneficiaries?: number
+  location?: string
   startDate: Date
   endDate?: Date
-  budgetId?: Types.ObjectId
+  budget?: string
   createdBy: Types.ObjectId
   createdAt: Date
   updatedAt: Date
@@ -40,9 +46,28 @@ const programSchema = new Schema<IProgram>(
       ref: 'User',
       required: true,
     },
-    budgetId: {
+    primarySponsor: {
+      type: String,
+    },
+    supportingSponsor: {
+      type: String,
+    },
+    departmentId: {
       type: Schema.Types.ObjectId,
-      ref: 'Budget',
+      ref: 'Department',
+      required: true,
+    },
+    impact: {
+      type: String,
+    },
+    beneficiaries: {
+      type: Number,
+    },
+    location: {
+      type: String,
+    },
+    budget: {
+      type: String,
     },
     startDate: {
       type: Date,

@@ -8,6 +8,7 @@ import budgetRoutes from './modules/budget/budget.routes.js'
 import reportRoutes from './modules/report/report.routes.js'
 import auditLogRoutes from './modules/auditLogs/auditlog.routes.js'
 import erpRoutes from './modules/erp/erp.routes.js'
+import { dashboardSSE } from './modules/dashboard/dashboard.sse.js'
 
 const app = express()
 
@@ -21,6 +22,7 @@ app.use('/api/report', reportRoutes)
 app.use('/api/auditlog', auditLogRoutes)
 app.use('/api/erp', erpRoutes)
 
+app.get('/api/dashboard/stream', dashboardSSE)
 app.use(errorMiddleware)
 
 export default app
